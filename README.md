@@ -99,11 +99,11 @@ a Raw integer.
 STRING:  
 	When sending a string, if the string is one of the predefined key strings, it can be sent as a single byte
 	indicating the (zero-based) index of the string in the key string list.
-	If not one of the key strings, the string is sent as a byte 0x80, followed by three bytes encoding the length
-	of the string's encoding in bytes (in server's preferred endianity), followed by the bytes of the encoding
-	(no escaping or delimiting characters).
+	If not one of the key strings, the string is sent as a byte 0x80, followed by the bytes of the encoding
+	(no escaping or delimiting characters), followed by the encoding of a NUL character.
 
 INTEGER:
+	
 	
 *TODO*
 
