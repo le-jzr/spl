@@ -56,7 +56,7 @@ INTEGER:
 
 BLOB:  
 	The byte array is represented by the character `#`, followed by the length of the array in decimal notation,
-	followed by the character ":" followed by the bytes of the array, each encoded as two hexadecimal digits in lowercase.
+	followed by the character `:` followed by the bytes of the array, each encoded as two hexadecimal digits in lowercase.
 	Example: The array { 0, 1, 26, 87, 128, 13 } would be represented as `#6:00011a57800d`.
 	
 LIST:  
