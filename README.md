@@ -42,7 +42,7 @@ Printable text representation
 
 When an SPL object needs to be stored in a human-readable text (e.g. as a configuration file), the following format is to be used:
 
-STRING:  
+ * STRING  
 	The string is encoded by escaping it and enclosing it in double quotes.
 	Before enclosing, non-printable characters, double quotes and backslashes ale all transformed into escape sequences.
 	Escape sequences supported are: `\"`, `\\`, `\t`, `\n`, `\xHH`, `\uHHHH`, `\UHHHHHHHH`. All in their traditional meaning, except for `\n`,
@@ -50,16 +50,16 @@ STRING:
 	`\xHH` escape sequence is interpreted as a byte in UTF-8 format. A sequence of adjacent bytes is decoded as a single UTF-8 string.
 	It is permitted to encode a single unicode code point as a sequence of its constituent UTF-8 bytes.
 
-INTEGER:  
+ * INTEGER  
 	The integer value is encoded as a conventional decimal number string, with no spaces or other separators, and no enclosing characters.
 	Example: The number -12458 would be represented using the character sequence `-`, `1`, `2`, `4`, `5`, `8`.
 
-BLOB:  
+ * BLOB  
 	The byte array is represented by the character `#`, followed by the length of the array in decimal notation,
 	followed by the character `:` followed by the bytes of the array, each encoded as two hexadecimal digits in lowercase.
 	Example: The array { 0, 1, 26, 87, 128, 13 } would be represented as `#6:00011a57800d`.
 	
-LIST:  
+ * LIST  
 	The object list is represented as a sequence of representations of its constituent objects separated by whitespace,
 	the entire sequence enclosed in a pair of regular parentheses.
 	Example: A list of string "hello", string "world", integer 1337, an empty list, and a blob {0,1,1,2,3,5,8,13},
@@ -85,8 +85,7 @@ Before any other data, the stream starts with a LIST of up to 128 key STRINGs, a
 The set of key strings may be empty. It depends on the application protocol or a statistical analysis of data,
 and serves to assign a single-byte identifiers to most frequent strings.
 
-
-Definition of Raw integer:  
+Raw integer encoding:  
 	Raw integer is a variable-length encoding of an unsigned integer.
 	It is a sequence of bytes. The most significant bit of each byte
 	is the end marker. If it is set to 0, the next byte is a
