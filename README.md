@@ -81,9 +81,28 @@ In absence of any other requirements or negotiation on the application level, th
 Rationale: UTF-8 is space-efficient for strings in latin-derived writing systems.
 Little-endian is for consistency with long integer encoding, where little-endian is simpler to work with.
 
-Before any other data, the stream starts with a LIST of up to 128 key STRINGs, as the first SPL object.
+Before any other data, the stream starts with a LIST of up to 112 key STRINGs, as the first SPL object.
 The set of key strings may be empty. It depends on the application protocol or a statistical analysis of data,
 and serves to assign a single-byte identifiers to most frequent strings.
+
+Control bytes:  
+ * `0x80`--`0xEF` Key STRINGs.
+ * `0xF0` reserved
+ * `0xF1` reserved
+ * `0xF2` reserved
+ * `0xF3` reserved
+ * `0xF4` reserved
+ * `0xF5` reserved
+ * `0xF6` reserved
+ * `0xF7` reserved
+ * `0xF8` reserved
+ * `0xF9` reserved
+ * `0xFA` Start of a LIST.
+ * `0xFB` End of a LIST.
+ * `0xFC` Start of a STRING.
+ * `0xFD` Start of a BLOB.
+ * `0xFE` Start of a positive INTEGER.
+ * `0xFF` Start of a negative INTEGER.
 
 Raw integer encoding:  
 	Raw integer is a variable-length encoding of an unsigned integer.
