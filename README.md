@@ -75,12 +75,6 @@ This representation is designed for efficient transfer of data from one applicat
 If you do not care for efficiency, you can just use the text representation.
 However, do not use the binary representation anywhere, where you expect a human to read it.
 
-First off, the representation has two parameters.
-The endianity (little-endian/big-endian), and the string encoding (UTF-8, UTF-16, whatever else).
-In absence of any other requirements or negotiation on the application level, the recommended defaults are little-endian and UTF-8.
-Rationale: UTF-8 is space-efficient for strings in latin-derived writing systems.
-Little-endian is for consistency with long integer encoding, where little-endian is simpler to work with.
-
 Before any other data, the stream starts with a LIST of up to 112 key STRINGs, as the first SPL object.
 The set of key strings may be empty. It depends on the application protocol or a statistical analysis of data,
 and serves to assign a single-byte identifiers to most frequent strings.
@@ -104,22 +98,25 @@ Control bytes:
  * `0xFE` Start of a positive INTEGER.
  * `0xFF` Start of a negative INTEGER.
 
-Raw integer encoding:  
-	Raw integer is a variable-length encoding of an unsigned integer.
+7-bit integer encoding (INT7):  
+	INT7 a variable-length encoding of an unsigned integer.
 	It is a sequence of bytes. The most significant bit of each byte
-	is the end marker. If it is set to 0, the next byte is a
-	continuation of raw integer. If it is 1, the byte is the last byte of
-	the integer. The resulting value is computed by appending the 7 bits
-	from each byte in little-endian order.
+	is set to zero, i.e. each byte contains 7 bits of the integer.
+	Bytes are in little-endian order, i.e. the first byte contains
+	the 7 least significant bits of a number.
+	There must be no trailing zero bytes.
 
-Each SPL object is encoded by first writing its total length in bytes as
-a Raw integer.
+Each SPL object is optionally prefixed with the length of the entire object
+in INT7 encoding, not including the length of the INT7 length itself, but
+including any control bytes.
+For objects of type BLOB or INTEGER, this length-prefix is mandatory.
+After the length, one control byte identifies the type of the object.
 
 STRING:  
-	When sending a string, if the string is one of the predefined key strings, it can be sent as a single byte
-	indicating the (zero-based) index of the string in the key string list.
-	If not one of the key strings, the string is sent as a byte 0x80, followed by the bytes of the encoding
-	(no escaping or delimiting characters), followed by the encoding of a NUL character.
+	A STRING is identified either by a byte in range `0x80`--`0xEF`, or a byte of value `0xFC`.
+	In the former case, the byte's value minus 128 identifies one of the key strings.
+	No further data is included. In the latter case, string data encoded as UTF-8 follow
+	the control byte, terminated by a byte of value 0.
 
 INTEGER:
 	
