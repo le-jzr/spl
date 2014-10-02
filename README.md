@@ -110,8 +110,7 @@ Each SPL object is optionally prefixed with the length of the entire object
 in INT7 encoding, not including the length of the INT7 length itself, but
 including any control bytes.
 For objects of type BLOB or INTEGER, this length-prefix is mandatory.
-After the length, one control byte identifies the type of the object,
-followed by object data, as described bellow.
+After the length, object identification and data follows, as described bellow.
 
  * STRING:  
 	A byte in range `0x80`--`0xEF`, or a byte of value `0xFC`.
