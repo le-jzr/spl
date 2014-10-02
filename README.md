@@ -1,8 +1,6 @@
 SPL
 ===
 
-*NOTE: This document is unfinished.*
-
 SPL is a simple format for representing structured data.  
 It is heavily inspired by Ron Rivest's S-Expressions (http://people.csail.mit.edu/rivest/sexp.html).
 
@@ -133,11 +131,11 @@ After the length, object identification and data follows, as described bellow.
 Extensions, clarifications, etc.
 --------------------------------
 
-Q: What character encoding is the printable text representation?
+Q: What character encoding is the printable text representation?  
 A: Unimportant, but you are bound to make someone angry if you don't use UTF-8.
 
-Q: How do you encode date/time/datetime information?
+Q: How do you encode date/time/datetime information?  
 A: String (https://tools.ietf.org/html/rfc3339), or integer (https://en.wikipedia.org/wiki/Unix_time) are both good choices. Make your pick and make it stick.
 
-Q: How do you encode anything else?
+Q: How do you encode anything else?  
 A: Any way you want. If you think something deserves a guideline here, let me know.
