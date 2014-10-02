@@ -139,3 +139,6 @@ A: String (https://tools.ietf.org/html/rfc3339), or integer (https://en.wikipedi
 
 Q: How do you encode anything else?  
 A: Any way you want. If you think something deserves a guideline here, let me know.
+
+Q: Is there a "canonical" encoding?  
+A: The binary stream representation without any key strings, and with no length specifications except the mandatory ones. To the best of my knowledge, such restricted encoding is unique. (And you can readily compute this from any other encoding.)
