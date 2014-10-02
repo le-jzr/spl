@@ -96,7 +96,7 @@ Control bytes:
  * `0xFE` Start of a positive INTEGER.
  * `0xFF` Start of a negative INTEGER.
 
-7-bit integer encoding (INT7):  
+ * 7-bit integer encoding (INT7):  
 	INT7 a variable-length encoding of an unsigned integer.
 	It is a sequence of bytes. The most significant bit of each byte
 	is set to zero, i.e. each byte contains 7 bits of the integer.
