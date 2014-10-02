@@ -110,18 +110,25 @@ Each SPL object is optionally prefixed with the length of the entire object
 in INT7 encoding, not including the length of the INT7 length itself, but
 including any control bytes.
 For objects of type BLOB or INTEGER, this length-prefix is mandatory.
-After the length, one control byte identifies the type of the object.
+After the length, one control byte identifies the type of the object,
+followed by object data, as described bellow.
 
-STRING:  
-	A STRING is identified either by a byte in range `0x80`--`0xEF`, or a byte of value `0xFC`.
+ * STRING:  
+	A byte in range `0x80`--`0xEF`, or a byte of value `0xFC`.
 	In the former case, the byte's value minus 128 identifies one of the key strings.
 	No further data is included. In the latter case, string data encoded as UTF-8 follow
 	the control byte, terminated by a byte of value 0.
 
-INTEGER:
-	
-	
-*TODO*
+ * INTEGER:
+	Either `0xFE` (nonnegative) or `0xFF` (negative), followed by little-endian sequence
+	of bytes, with no trailing zero bytes. Each byte contains full 8 bits of the absolute
+	value of the number. Zero is nonnegative, i.e. `01FE`, not `01FF`, nor `02FE00`.
+
+ * BLOB:
+	`0xFD` followed by bytes of the blob. Example for {1, 2, 3}: `04FD010203`. Example for {}: `01FD`.
+
+ * LIST:
+	`0xFA`, followed by encodings of the contained objects, followed by `0xFB`.
 
 
 Extensions, clarifications, etc.
