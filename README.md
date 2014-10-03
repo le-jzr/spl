@@ -43,8 +43,7 @@ When an SPL object needs to be stored in a human-readable text (e.g. as a config
  * STRING  
 	The string is encoded by escaping it and enclosing it in double quotes.
 	Before enclosing, non-printable characters, double quotes and backslashes ale all transformed into escape sequences.
-	Escape sequences supported are: `\"`, `\\`, `\t`, `\n`, `\xHH`, `\uHHHH`, `\UHHHHHHHH`. All in their traditional meaning, except for `\n`,
-	which always represents the application's preferred representation of a "new line" mark.
+	Escape sequences supported are: `\"`, `\\`, `\t`, `\n` = 0x0a, `\r` = 0x0d, `\xHH`, `\uHHHH`, `\UHHHHHHHH`. All in their traditional meaning.
 	`\xHH` escape sequence is interpreted as a byte in UTF-8 format. A sequence of adjacent bytes is decoded as a single UTF-8 string.
 	It is permitted to encode a single unicode code point as a sequence of its constituent UTF-8 bytes.
 
@@ -93,7 +92,7 @@ Control bytes:
  * `0xFB` End of a LIST.
  * `0xFC` Start of a STRING.
  * `0xFD` Start of a BLOB.
- * `0xFE` Start of a positive INTEGER.
+ * `0xFE` Start of a non-negative INTEGER.
  * `0xFF` Start of a negative INTEGER.
 
  * 7-bit integer encoding (INT7):  
