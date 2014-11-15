@@ -194,6 +194,7 @@ func (p *SeqParser) String() string {
 				h[0] = p.current()
 				p.shift(1)
 				h[1] = p.current()
+				p.shift(1)
 				str = append(str, byte(unhex(h)))
 			case 'u':
 				// TODO
